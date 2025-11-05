@@ -53,7 +53,141 @@
 #define SYS1_TASK2_WCET		1000
 #define SYS1_TASK3_WCET		2000
 
+//-------------------------------------------------------------
 
+/* Tasks periods. SISTEMA 2*/
+#define SYS2_TASK1_PERIOD 	4000
+#define SYS2_TASK2_PERIOD 	8000
+#define SYS2_TASK3_PERIOD 	9000
+
+/* Tasks WCETs. */
+#define SYS2_TASK1_WCET		1000
+#define SYS2_TASK2_WCET		1000
+#define SYS2_TASK3_WCET		2000
+
+/*-----------------------------------------------------------*/
+
+/* Tasks periods. SISTEMA 3*/
+#define SYS3_TASK1_PERIOD 	4000
+#define SYS3_TASK2_PERIOD 	6000
+#define SYS3_TASK3_PERIOD 	8000
+#define SYS3_TASK4_PERIOD 	13000
+
+/* Tasks WCETs. */
+#define SYS3_TASK1_WCET		1000
+#define SYS3_TASK2_WCET		1000
+#define SYS3_TASK3_WCET		1000
+#define SYS3_TASK4_WCET		3000
+
+/*-----------------------------------------------------------*/
+
+/* Tasks periods. SISTEMA 4*/
+#define SYS4_TASK1_PERIOD 	4000
+#define SYS4_TASK2_PERIOD 	7000
+#define SYS4_TASK3_PERIOD 	12000
+#define SYS4_TASK4_PERIOD 	14000
+
+/* Tasks WCETs. */
+#define SYS4_TASK1_WCET		1000
+#define SYS4_TASK2_WCET		2000
+#define SYS4_TASK3_WCET		1000
+#define SYS4_TASK4_WCET		2000
+
+/*-----------------------------------------------------------*/
+
+/* Tasks periods. SISTEMA 5*/
+#define SYS5_TASK1_PERIOD 	5000
+#define SYS5_TASK2_PERIOD 	9000
+#define SYS5_TASK3_PERIOD 	10000
+#define SYS5_TASK4_PERIOD 	15000
+#define SYS5_TASK5_PERIOD 	16000
+
+/* Tasks WCETs. */
+#define SYS5_TASK1_WCET		1000
+#define SYS5_TASK2_WCET		1000
+#define SYS5_TASK3_WCET		1000
+#define SYS5_TASK4_WCET		2000
+#define SYS5_TASK5_WCET		2000
+
+/*-----------------------------------------------------------*/
+
+/* Tasks periods. SISTEMA 6*/
+#define SYS6_TASK1_PERIOD 	6000
+#define SYS6_TASK2_PERIOD 	8000
+#define SYS6_TASK3_PERIOD 	11000
+#define SYS6_TASK4_PERIOD 	15000
+#define SYS6_TASK5_PERIOD 	17000
+
+/* Tasks WCETs. */
+#define SYS6_TASK1_WCET		1000
+#define SYS6_TASK2_WCET		1000
+#define SYS6_TASK3_WCET		2000
+#define SYS6_TASK4_WCET		1000
+#define SYS6_TASK5_WCET		2000
+
+/*-----------------------------------------------------------*/
+
+/* Tasks periods. SISTEMA 7*/
+#define SYS7_TASK1_PERIOD 	4000
+#define SYS7_TASK2_PERIOD 	7000
+#define SYS7_TASK3_PERIOD 	10000
+#define SYS7_TASK4_PERIOD 	14000
+
+/* Tasks WCETs. */
+#define SYS7_TASK1_WCET		1000
+#define SYS7_TASK2_WCET		1000
+#define SYS7_TASK3_WCET		2000
+#define SYS7_TASK4_WCET		2000
+
+/*-----------------------------------------------------------*/
+
+/* Tasks periods. SISTEMA 8*/
+#define SYS8_TASK1_PERIOD 	4000
+#define SYS8_TASK2_PERIOD 	8000
+#define SYS8_TASK3_PERIOD 	10000
+#define SYS8_TASK4_PERIOD 	14000
+
+/* Tasks WCETs. */
+#define SYS8_TASK1_WCET		1000
+#define SYS8_TASK2_WCET		1000
+#define SYS8_TASK3_WCET		2000
+#define SYS8_TASK4_WCET		2000
+
+/*-----------------------------------------------------------*/
+
+/* Tasks periods. SISTEMA 9*/
+#define SYS9_TASK1_PERIOD 	5000
+#define SYS9_TASK2_PERIOD 	8000
+#define SYS9_TASK3_PERIOD 	12000
+#define SYS9_TASK4_PERIOD 	15000
+#define SYS9_TASK5_PERIOD 	16000
+
+/* Tasks WCETs. */
+#define SYS9_TASK1_WCET		1000
+#define SYS9_TASK2_WCET		1000
+#define SYS9_TASK3_WCET		2000
+#define SYS9_TASK4_WCET		1000
+#define SYS9_TASK5_WCET		1000
+
+/*-----------------------------------------------------------*/
+
+/* Tasks periods. SISTEMA 10*/
+#define SYS10_TASK1_PERIOD 	5000
+#define SYS10_TASK2_PERIOD 	8000
+#define SYS10_TASK3_PERIOD 	12000
+#define SYS10_TASK4_PERIOD 	13000
+#define SYS10_TASK5_PERIOD 	16000
+
+/* Tasks WCETs. */
+#define SYS10_TASK1_WCET	1000
+#define SYS10_TASK2_WCET	1000
+#define SYS10_TASK3_WCET	1000
+#define SYS10_TASK4_WCET	1000
+#define SYS10_TASK5_WCET	2000
+
+/*-----------------------------------------------------------*/
+
+#define seleccion 	system4
 
 /*
  * Configure the hardware for the demo.
@@ -97,6 +231,77 @@ xTask task1 = { SYS1_TASK1_WCET, SYS1_TASK1_PERIOD };
 xTask task2 = { SYS1_TASK2_WCET, SYS1_TASK2_PERIOD };
 xTask task3 = { SYS1_TASK3_WCET, SYS1_TASK3_PERIOD };
 
+xTask system1[] = {
+    { SYS1_TASK1_WCET, SYS1_TASK1_PERIOD },
+    { SYS1_TASK2_WCET, SYS1_TASK2_PERIOD },
+    { SYS1_TASK3_WCET, SYS1_TASK3_PERIOD }
+};
+
+xTask system2[] = {
+    { SYS2_TASK1_WCET, SYS2_TASK1_PERIOD },
+    { SYS2_TASK2_WCET, SYS2_TASK2_PERIOD },
+    { SYS2_TASK3_WCET, SYS2_TASK3_PERIOD }
+};
+
+xTask system3[] = {
+    { SYS3_TASK1_WCET, SYS3_TASK1_PERIOD },
+    { SYS3_TASK2_WCET, SYS3_TASK2_PERIOD },
+    { SYS3_TASK3_WCET, SYS3_TASK3_PERIOD },
+    { SYS3_TASK4_WCET, SYS3_TASK4_PERIOD }
+};
+
+xTask system4[] = {
+    { SYS4_TASK1_WCET, SYS4_TASK1_PERIOD },
+    { SYS4_TASK2_WCET, SYS4_TASK2_PERIOD },
+    { SYS4_TASK3_WCET, SYS4_TASK3_PERIOD },
+    { SYS4_TASK4_WCET, SYS4_TASK4_PERIOD }
+};
+
+xTask system5[] = {
+    { SYS5_TASK1_WCET, SYS5_TASK1_PERIOD },
+    { SYS5_TASK2_WCET, SYS5_TASK2_PERIOD },
+    { SYS5_TASK3_WCET, SYS5_TASK3_PERIOD },
+    { SYS5_TASK4_WCET, SYS5_TASK4_PERIOD },
+    { SYS5_TASK5_WCET, SYS5_TASK5_PERIOD }
+};
+
+xTask system6[] = {
+    { SYS6_TASK1_WCET, SYS6_TASK1_PERIOD },
+    { SYS6_TASK2_WCET, SYS6_TASK2_PERIOD },
+    { SYS6_TASK3_WCET, SYS6_TASK3_PERIOD },
+    { SYS6_TASK4_WCET, SYS6_TASK4_PERIOD },
+    { SYS6_TASK5_WCET, SYS6_TASK5_PERIOD }
+};
+
+xTask system7[] = {
+    { SYS7_TASK1_WCET, SYS7_TASK1_PERIOD },
+    { SYS7_TASK2_WCET, SYS7_TASK2_PERIOD },
+    { SYS7_TASK3_WCET, SYS7_TASK3_PERIOD },
+    { SYS7_TASK4_WCET, SYS7_TASK4_PERIOD }
+};
+
+xTask system8[] = {
+    { SYS8_TASK1_WCET, SYS8_TASK1_PERIOD },
+    { SYS8_TASK2_WCET, SYS8_TASK2_PERIOD },
+    { SYS8_TASK3_WCET, SYS8_TASK3_PERIOD },
+    { SYS8_TASK4_WCET, SYS8_TASK4_PERIOD }
+};
+
+xTask system9[] = {
+    { SYS9_TASK1_WCET, SYS9_TASK1_PERIOD },
+    { SYS9_TASK2_WCET, SYS9_TASK2_PERIOD },
+    { SYS9_TASK3_WCET, SYS9_TASK3_PERIOD },
+    { SYS9_TASK4_WCET, SYS9_TASK4_PERIOD },
+    { SYS9_TASK5_WCET, SYS9_TASK5_PERIOD }
+};
+
+xTask system10[] = {
+    { SYS10_TASK1_WCET, SYS10_TASK1_PERIOD },
+    { SYS10_TASK2_WCET, SYS10_TASK2_PERIOD },
+    { SYS10_TASK3_WCET, SYS10_TASK3_PERIOD },
+    { SYS10_TASK4_WCET, SYS10_TASK4_PERIOD },
+    { SYS10_TASK5_WCET, SYS10_TASK5_PERIOD }
+};
 
 /*************************************************************************
  * Main
@@ -127,11 +332,22 @@ int main( void )
     /* Print "Start!" to the UART. */
     prvPrintString("Start!\n\r");
 
+    xTask* selectedSystem = seleccion;
+	int systemSize = sizeof(seleccion) / sizeof(xTask);
+
+	for (int i = 0; i < systemSize; i++) {
+		char name[10];
+		int n = i + 1;
+		sprintf(name, "T%d", i + 1);
+		xTaskCreate(prvTask, name, configMINIMAL_STACK_SIZE + 50, &selectedSystem[i],
+					configMAX_PRIORITIES - n, NULL);
+	}
+
     /* Creates the periodic tasks. */
     //funcion que va a ejecutar, nombre, pila, puntero del c y el periodo, 6 prioridad mas alta y le va restando, no lo usamos aun es un puntero que permite referenciar
-    xTaskCreate( prvTask, "T1", configMINIMAL_STACK_SIZE + 50, (void*) &task1, configMAX_PRIORITIES - 1, NULL );
-    xTaskCreate( prvTask, "T2", configMINIMAL_STACK_SIZE + 50, (void*) &task2, configMAX_PRIORITIES - 2, NULL );
-    xTaskCreate( prvTask, "T3", configMINIMAL_STACK_SIZE + 50, (void*) &task3, configMAX_PRIORITIES - 3, NULL );
+    //xTaskCreate( prvTask, "T1", configMINIMAL_STACK_SIZE + 50, (void*) &task1, configMAX_PRIORITIES - 1, NULL );
+    //xTaskCreate( prvTask, "T2", configMINIMAL_STACK_SIZE + 50, (void*) &task2, configMAX_PRIORITIES - 2, NULL );
+    //xTaskCreate( prvTask, "T3", configMINIMAL_STACK_SIZE + 50, (void*) &task3, configMAX_PRIORITIES - 3, NULL );
 
     vTraceEnable( TRC_START );
 
@@ -197,10 +413,13 @@ void prvTask( void *pvParameters )
 	for( ;; )
 	{
 
-		snprintf(cMessage, sizeof(cMessage), "%s - %u - %u\n\r", pcTaskGetTaskName(NULL), uxReleaseCount, (unsigned) xTaskGetTickCount());
+		snprintf(cMessage, sizeof(cMessage), "S %s - %u - %u\n\r", pcTaskGetTaskName(NULL), uxReleaseCount, (unsigned) xTaskGetTickCount());
 		prvPrintString(cMessage); //imprime por pantalla
 
         vBusyWait( task->wcet - restTiempo); //imprimir de vuelta antes de terminar
+
+        snprintf(cMessage, sizeof(cMessage), "E %s - %u - %u\n\r", pcTaskGetTaskName(NULL), uxReleaseCount, (unsigned) xTaskGetTickCount());
+        prvPrintString(cMessage);
 
 		vTaskDelayUntil( &pxPreviousWakeTime, task->period );
 

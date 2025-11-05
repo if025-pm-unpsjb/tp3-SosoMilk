@@ -29,6 +29,8 @@
 #include "uart.h"
 #include "bitmap.h"
 
+#include "semphr.h"
+
 /*-----------------------------------------------------------*/
 
 /* Dimensions the buffer for text messages. */
@@ -44,16 +46,18 @@
 #define restTiempo							100
 
 /* Tasks periods. SISTEMA 1*/
-#define SYS1_TASK1_PERIOD 	4000
-#define SYS1_TASK2_PERIOD 	5000
-#define SYS1_TASK3_PERIOD 	8000
+#define SYS1_TASK1_PERIOD 	3000
+#define SYS1_TASK2_PERIOD 	2000
+#define SYS1_TASK3_PERIOD 	4000
 
 /* Tasks WCETs. */
 #define SYS1_TASK1_WCET		1000
 #define SYS1_TASK2_WCET		1000
 #define SYS1_TASK3_WCET		2000
 
+//-------------------------------------------------------------
 
+#define seleccion 	system1
 
 /*
  * Configure the hardware for the demo.
@@ -83,6 +87,7 @@ void ( *vOLEDInit )( uint32_t ) = NULL;
 void ( *vOLEDStringDraw )( const char *, uint32_t, uint32_t, unsigned char ) = NULL;
 void ( *vOLEDImageDraw )( const unsigned char *, uint32_t, uint32_t, uint32_t, uint32_t ) = NULL;
 void ( *vOLEDClear )( void ) = NULL;
+//SemaphoreHandle_t xSemaphoreCreateBinary( void );
 
 /*-----------------------------------------------------------*/
 
@@ -93,10 +98,13 @@ struct xTaskStruct {
 
 typedef struct xTaskStruct xTask;
 
-xTask task1 = { SYS1_TASK1_WCET, SYS1_TASK1_PERIOD };
-xTask task2 = { SYS1_TASK2_WCET, SYS1_TASK2_PERIOD };
-xTask task3 = { SYS1_TASK3_WCET, SYS1_TASK3_PERIOD };
+xTask system1[] = {
+    { SYS1_TASK1_WCET, SYS1_TASK1_PERIOD },
+    { SYS1_TASK2_WCET, SYS1_TASK2_PERIOD },
+    { SYS1_TASK3_WCET, SYS1_TASK3_PERIOD }
+};
 
+SemaphoreHandle_t xSemaforo;
 
 /*************************************************************************
  * Main
@@ -127,11 +135,27 @@ int main( void )
     /* Print "Start!" to the UART. */
     prvPrintString("Start!\n\r");
 
-    /* Creates the periodic tasks. */
-    //funcion que va a ejecutar, nombre, pila, puntero del c y el periodo, 6 prioridad mas alta y le va restando, no lo usamos aun es un puntero que permite referenciar
-    xTaskCreate( prvTask, "T1", configMINIMAL_STACK_SIZE + 50, (void*) &task1, configMAX_PRIORITIES - 1, NULL );
-    xTaskCreate( prvTask, "T2", configMINIMAL_STACK_SIZE + 50, (void*) &task2, configMAX_PRIORITIES - 2, NULL );
-    xTaskCreate( prvTask, "T3", configMINIMAL_STACK_SIZE + 50, (void*) &task3, configMAX_PRIORITIES - 3, NULL );
+    xSemaforo = xSemaphoreCreateBinary();
+
+	if (xSemaforo == NULL) {
+		prvPrintString("Error al crear semaforo!\n\r");
+		for (;;);
+	}
+
+	// Inicialmente damos el semáforo (lo "liberamos")
+	xSemaphoreGive(xSemaforo);
+
+    xTask* selectedSystem = seleccion;
+	int systemSize = sizeof(seleccion) / sizeof(xTask);
+
+	//xSemaphore = xSemaphoreCreateBinary();
+
+	for (int i = 0; i < systemSize; i++) {
+		char name[10];
+		int n = i + 1;
+		sprintf(name, "T%d", i + 1);
+		xTaskCreate(prvTask, name, configMINIMAL_STACK_SIZE + 50, &selectedSystem[i], configMAX_PRIORITIES - n, NULL);
+	}
 
     vTraceEnable( TRC_START );
 
@@ -196,11 +220,16 @@ void prvTask( void *pvParameters )
 
 	for( ;; )
 	{
+		if (xSemaphoreTake(xSemaforo, portMAX_DELAY) == pdTRUE){
+			snprintf(cMessage, sizeof(cMessage), "S %s - %u - %u\n\r", pcTaskGetTaskName(NULL), uxReleaseCount, (unsigned) xTaskGetTickCount());
+			prvPrintString(cMessage); //imprime por pantalla
 
-		snprintf(cMessage, sizeof(cMessage), "%s - %u - %u\n\r", pcTaskGetTaskName(NULL), uxReleaseCount, (unsigned) xTaskGetTickCount());
-		prvPrintString(cMessage); //imprime por pantalla
+			vBusyWait( task->wcet - restTiempo); //imprimir de vuelta antes de terminar
 
-        vBusyWait( task->wcet - restTiempo); //imprimir de vuelta antes de terminar
+			snprintf(cMessage, sizeof(cMessage), "E %s - %u - %u\n\r", pcTaskGetTaskName(NULL), uxReleaseCount, (unsigned) xTaskGetTickCount());
+			prvPrintString(cMessage);
+			xSemaphoreGive(xSemaforo);
+        }
 
 		vTaskDelayUntil( &pxPreviousWakeTime, task->period );
 
@@ -209,6 +238,7 @@ void prvTask( void *pvParameters )
 
 	vTaskDelete( NULL );
 }
+
 /*-----------------------------------------------------------*/
 
 void vAssertCalled( const char *pcFile, uint32_t ulLine )
