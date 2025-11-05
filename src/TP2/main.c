@@ -187,7 +187,7 @@
 
 /*-----------------------------------------------------------*/
 
-#define seleccion 	system4
+#define seleccion system10
 
 /*
  * Configure the hardware for the demo.
